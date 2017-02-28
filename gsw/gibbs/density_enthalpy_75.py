@@ -138,58 +138,62 @@ v600 =  3.1932457305e-5
 
 @match_args_return
 def alpha(SA,CT,p):
-
     """
-    gsw.alpha              thermal expansion coefficient with respect to
-                             Conservative Temperature (76-term equation)
-    ====================================================================
+    Thermal expansion coefficient from CT (75-term equation)
 
-    USAGE:
-    alpha = gsw.alpha(SA,CT,p)
+    Calculates the thermal expansion coefficient of seawater with respect to
+    Conservative Temperature using the computationally-efficient expression
+    for specific volume in terms of SA, CT and p (Roquet et al., 2015).
 
-    DESCRIPTION:
-    Calculates the thermal expansion coefficient of seawater with
-    respect to Conservative Temperature using the computationally-
-    efficient expression for specific volume in terms of SA, CT and
-    p (Roquet et al., 2014).
+    Parameters
+    ----------
+    SA : array_like
+         Absolute Salinity  [g/kg]
+    CT : array_like
+         Conservative Temperature [:math:`^\circ` C (ITS-90)]
+    p : array_like
+        sea pressure ( i.e. absolute pressure - 10.1325 dbar ) [dbar]
 
-    Note that this 76-term equation has been fitted in a restricted
-    range of parameter space, and is most accurate inside the
-    "oceanographic funnel" described in McDougall et al. (2010).
-    The GSW library function "gsw.infunnel(SA,CT,p)" is avaialble to be
-    used if one wants to test if some of one's data lies outside this
-    "funnel".
+    Returns
+    -------
+    alpha : array_like
+            thermal expansion coefficient [K :math:`-1`]
+            with respect to Conservative Temperature
 
-    INPUT:
-    SA  =  Absolute Salinity                                    [ g/kg ]
-    CT  =  Conservative Temperature (ITS-90)                   [ deg C ]
-    p   =  sea pressure                                         [ dbar ]
-           ( i.e. absolute pressure - 10.1325 dbar )
+    Notes
+    -----
+    Note that this 75-term equation has been fitted in a restricted range of
+    parameter space, and is most accurate inside the "oceanographic funnel"
+    described in McDougall et al. (2003).  The GSW library function
+    infunnel(SA,CT,p) is avaialble to be used if one wants to test if some of
+    one's data lies outside this "funnel".
 
     SA & CT need to have the same dimensions.
     p may have dimensions 1x1 or Mx1 or 1xN or MxN, where SA & CT are
     MxN.
 
-    OUTPUT:
-    alpha  =  thermal expansion coefficient                      [ 1/K ]
-              with respect to Conservative Temperature
+    Version
+    -------
+    3.05 (27th November, 2015)
 
-    AUTHOR:
-    Paul Barker and Trevor McDougall                [ help@teos-10.org ]
+    References
+    ----------
+    .. [1] IOC, SCOR and IAPSO, 2010: The international thermodynamic equation
+       of seawater - 2010: Calculation and use of thermodynamic properties.
+       Intergovernmental Oceanographic Commission, Manuals and Guides No. 56,
+       UNESCO (English), 196 pp. Available from http://www.TEOS-10.org
+       See Eqn. (2.18.3) of this TEOS-10 manual.
 
-    VERSION NUMBER: 3.05 (27th November, 2015)
+    .. [2] McDougall, T.J., D.R. Jackett, D.G. Wright and R. Feistel, 2003:
+       Accurate and computationally efficient algorithms for potential
+       temperature and density of seawater.  J. Atmosph. Ocean. Tech., 20,
+       pp. 730-741.
 
-    REFERENCES:
-    IOC, SCOR and IAPSO, 2010: The international thermodynamic equation
-    of seawater - 2010: Calculation and use of thermodynamic properties.
-    Intergovernmental Oceanographic Commission, Manuals and Guides No.
-    56, UNESCO (English), 196 pp.  Available from http://www.TEOS-10.org
-    See Eqn. (2.18.3) of this TEOS-10 manual.
-
-    Roquet, F., G. Madec, T.J. McDougall, P.M. Barker, 2014: Accurate
-    polynomial expressions for the density and specifc volume of seawater
-    using the TEOS-10 standard. Ocean Modelling.
+    .. [3] Roquet, F., G. Madec, T.J. McDougall, P.M. Barker, 2015: Accurate
+       polynomial expressions for the density and specifc volume of seawater
+       using the TEOS-10 standard. Ocean Modelling.
     """
+
     # This line ensures that SA is non-negative.
     SA = np.maximum(SA, 0)
 
