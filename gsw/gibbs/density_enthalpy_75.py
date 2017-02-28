@@ -4,6 +4,7 @@ from __future__ import division
 
 import numpy as np
 
+from .constants import sfac
 from ..utilities import match_args_return
 
 
@@ -193,13 +194,11 @@ def alpha(SA,CT,p):
     SA = np.maximum(SA, 0)
 
     #deltaS = 24
-    sfac = 0.0248826675584615            # sfac = 1/(40*(35.16504/35)).
     offset = 5.971840214030754e-1               # offset = deltaS*sfac.
 
-    x2 = sfac*SA
-    xs = np.sqrt(x2 + offset)
-    ys = CT*0.025
-    z = p*1e-4
+    xs = np.sqrt(sfac * SA + offset)
+    ys = CT * 0.025
+    z = p * 1e-4
 
     v_CT_part = ( a000 + xs*(a100 + xs*(a200 + xs*(a300 + xs*(a400
         + a500*xs)))) + ys*(a010 + xs*(a110 + xs*(a210 + xs*(a310
