@@ -4,7 +4,7 @@ from __future__ import division
 
 import numpy as np
 
-from .constants import sfac
+from .constants import sfac, soffset
 from ..utilities import match_args_return
 
 
@@ -197,10 +197,7 @@ def alpha(SA,CT,p):
     # This line ensures that SA is non-negative.
     SA = np.maximum(SA, 0)
 
-    #deltaS = 24
-    offset = 5.971840214030754e-1               # offset = deltaS*sfac.
-
-    xs = np.sqrt(sfac * SA + offset)
+    xs = np.sqrt(sfac * SA + soffset)
     ys = CT * 0.025
     z = p * 1e-4
 

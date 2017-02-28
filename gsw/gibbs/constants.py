@@ -100,6 +100,11 @@ sfac = 0.0248826675584615
 sfac = 1 / (40 * uPS) = 1 / (40. * (SSO / 35.))
 """
 
+soffset = 5.971840214030754e-1
+"""
+soffset = deltaS*sfac.
+"""
+
 R = 8.314472
 """
 The molar gas constant = 8.314472 m :sup:`2` kg s:sup:`-21 K :sup:`-1`
