@@ -7,6 +7,8 @@ import numpy as np
 from .constants import sfac, soffset
 from ..utilities import match_args_return
 
+__all__ = ['alpha']
+
 
 a000 = -1.5649734675e-5
 a001 =  1.8505765429e-5
