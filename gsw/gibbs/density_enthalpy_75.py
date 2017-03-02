@@ -233,3 +233,8 @@ def alpha(SA,CT,p):
     alpha_return = 0.025*v_CT_part/v
 
     return(alpha_return)
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
