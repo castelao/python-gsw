@@ -7,8 +7,7 @@ from __future__ import division
 
 import numpy as np
 import freezing as fr
-from utilities import match_args_return
-
+from ..utilities import match_args_return
 
 # In[2]:
 
