@@ -322,9 +322,7 @@ def alpha_on_beta(SA,CT,p):
         + ys*(b012 + xs*(b112 + b212*xs) + ys*(b022 + b122*xs
         + b032*ys)) + z*(b003 +  b103*xs + b013*ys + b004*z))) )
 
-    alpha_on_beta_return = -(v_CT_part*xs)/(20*sfac*v_SA_part)
-
-    return(alpha_on_beta_return)
+    return -(v_CT_part * xs) / (20. * sfac * v_SA_part)
 
 
 if __name__ == '__main__':
