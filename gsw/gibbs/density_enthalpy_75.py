@@ -9,7 +9,8 @@ from ..utilities import match_args_return
 
 __all__ = ['alpha',
         'alpha_on_beta',
-        'beta']
+        'beta',
+        'dynamic_enthalpy']
 
 
 a000 = -1.5649734675e-5
@@ -426,6 +427,112 @@ def beta(SA,CT,p):
     beta_return = -v_SA_part*0.5*sfac/(v*xs)
 
     return(beta_return)
+
+
+@match_args_return
+def dynamic_enthalpy(SA,CT,p):
+
+    """
+    gsw.dynamic_enthalpy                    dynamic enthalpy of seawater
+                                                      (76-term equation)
+    ====================================================================
+
+    USAGE:
+    dynamic_enthalpy = gsw.dynamic_enthalpy(SA,CT,p)
+
+    DESCRIPTION:
+    Calculates dynamic enthalpy of seawater using the computationally-
+    efficient expression for specific volume in terms of SA, CT and p
+    (Roquet et al., 2014).  Dynamic enthalpy is defined as enthalpy
+    minus potential enthalpy (Young, 2010).
+
+    Note that the 76-term equation has been fitted in a restricted range
+    of parameter space, and is most accurate inside the "oceanographic
+    funnel" described in IOC et al. (2010).  The GSW library function
+    "gsw.infunnel(SA,CT,p)" is avaialble to be used if one wants to test
+    if some of one's data lies outside this "funnel".
+
+    INPUT:
+    SA  =  Absolute Salinity                                    [ g/kg ]
+    CT  =  Conservative Temperature (ITS-90)                   [ deg C ]
+    p   =  sea pressure                                         [ dbar ]
+           ( i.e. absolute pressure - 10.1325 dbar )
+
+    SA & CT need to have the same dimensions.
+    p may have dimensions 1x1 or Mx1 or 1xN or MxN, where SA & CT are
+    MxN.
+
+    OUTPUT:
+    dynamic_enthalpy  =  dynamic enthalpy                       [ J/kg ]
+
+    AUTHOR:
+    Trevor McDougall and Paul Barker                [ help@teos-10.org ]
+
+    VERSION NUMBER: 3.04 (10th December, 2013)
+
+    REFERENCES:
+    IOC, SCOR and IAPSO, 2010: The international thermodynamic equation
+    of seawater - 2010: Calculation and use of thermodynamic properties.
+    Intergovernmental Oceanographic Commission, Manuals and Guides No.
+    56, UNESCO (English), 196 pp.  Available from http://www.TEOS-10.org
+    See section 3.2 of this TEOS-10 Manual.
+
+    McDougall, T. J., 2003: Potential enthalpy: A conservative oceanic
+    variable for evaluating heat content and heat fluxes. Journal of
+    Physical Oceanography, 33, 945-963.
+    See Eqns. (18) and (22)
+
+    Roquet, F., G. Madec, T.J. McDougall, P.M. Barker, 2014: Accurate
+    polynomial expressions for the density and specifc volume of seawater
+    using the TEOS-10 standard. Ocean Modelling.
+
+    Young, W.R., 2010: Dynamic enthalpy, Conservative Temperature, and
+    the seawater Boussinesq approximation. Journal of Physical
+    Oceanography, 40, 394-400.
+    """
+    # This line ensures that SA is non-negative.
+    SA = np.maximum(SA, 0)
+
+    # Set lower temperature limit for water that is much colder than the
+    # freezing termperature.
+    CT_frozen = - 1.79e-02 - 6.7157e-2*SA - 9.2708e-04*p
+
+    Icold = CT < (CT_frozen - 0.2)
+    if Icold.any():
+        CT[Icold] = np.nan
+
+    db2Pa = 1e4                      # factor to convert from dbar to Pa
+    cp0 = 3991.86795711963     # from Eqn. (3.3.3) of IOC et al. (2010).
+
+    sfac = 0.0248826675584615             # sfac = 1/(40*(35.16504/35)).
+    offset = 5.971840214030754e-1
+
+    x2 = sfac*SA
+    xs = np.sqrt(x2 + offset)
+    ys = CT*0.025
+    z = p*1e-4
+
+    dynamic_enthalpy_part = ( z*(h001 + xs*(h101 + xs*(h201 + xs*(h301
+        + xs*(h401 + xs*(h501 + h601*xs))))) + ys*(h011 + xs*(h111
+        + xs*(h211 + xs*(h311 + xs*(h411 + h511*xs)))) + ys*(h021
+        + xs*(h121 + xs*(h221 + xs*(h321 + h421*xs))) + ys*(h031
+        + xs*(h131 + xs*(h231 + h331*xs)) + ys*(h041 + xs*(h141
+        + h241*xs) + ys*(h051 + h151*xs + h061*ys))))) + z*(h002
+        + xs*(h102 + xs*(h202 + xs*(h302 + xs*(h402 + h502*xs))))
+        + ys*(h012 + xs*(h112 + xs*(h212 + xs*(h312 + h412*xs)))
+        + ys*(h022 + xs*(h122 + xs*(h222 + h322*xs)) + ys*(h032
+        + xs*(h132 + h232*xs) + ys*(h042 + h142*xs + h052*ys))))
+        + z*(h003 + xs*(h103 + xs*(h203 + xs*(h303 + h403*xs)))
+        + ys*(h013 + xs*(h113 + xs*(h213 + h313*xs)) + ys*(h023
+        + xs*(h123 + h223*xs) + ys*(h033 + h133*xs + h043*ys)))
+        + z*(h004 + xs*(h104 + h204*xs) + ys*(h014 + h114*xs + h024*ys)
+        + z*(h005 + h105*xs + h015*ys + z*(h006 + h007*z)))))) )
+
+    dynamic_enthalpy_return = dynamic_enthalpy_part*1e8
+    # Note. 1e8 = db2Pa*1e4
+
+    return(dynamic_enthalpy_return)
+
 
 if __name__ == '__main__':
     import doctest
