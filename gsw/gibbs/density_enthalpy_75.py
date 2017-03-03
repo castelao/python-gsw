@@ -537,7 +537,7 @@ def dynamic_enthalpy(SA,CT,p):
 
 
 @match_args_return
-def rho(SA,CT,p):
+def rho(SA, CT, p):
 
     """
     gsw.rho                           in-situ density (76-term equation)
@@ -617,7 +617,7 @@ def rho(SA,CT,p):
 
 
 @match_args_return
-def specvol(SA,CT,p):
+def specvol(SA, CT, p):
 
     """
     gsw_specvol                       specific volume (76-term equation)
