@@ -6,7 +6,7 @@
 from __future__ import division
 
 import numpy as np
-#import freezing as fr
+import freezing
 from ..utilities import match_args_return
 
 # In[2]:
@@ -940,7 +940,7 @@ def CT_from_rho(rho_input,SA,p, second_out = False):
     rho_extreme = rho_max.copy()
     # name CT_freezing as CT_freezing_var so it doesn't overlap with
     # CT_freezing definition.
-    CT_freezing_var = fr.CT_freezing(SA,p) # this assumes that the 
+    CT_freezing_var = freezing.CT_freezing(SA,p) # this assumes that the
     # seawater is always saturated with air
     rho_freezing = rho(SA,CT_freezing_var,p)
     # reset the extreme values
