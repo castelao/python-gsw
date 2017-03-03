@@ -11,7 +11,8 @@ __all__ = ['alpha',
         'alpha_on_beta',
         'beta',
         'dynamic_enthalpy',
-        'rho']
+        'rho',
+        'specvol']
 
 
 a000 = -1.5649734675e-5
