@@ -590,17 +590,11 @@ def rho(SA,CT,p):
     polynomial expressions for the density and specifc volume of
     seawater using the TEOS-10 standard. Ocean Modelling.
     """
-    # This line ensures that SA is non-negative.
     SA = np.maximum(SA, 0)
 
-    # deltaS = 24
-    sfac = 0.0248826675584615             # sfac = 1/(40*(35.16504/35)).
-    offset = 5.971840214030754e-1                # offset = deltaS*sfac.
-
-    x2 = sfac*SA
-    xs = np.sqrt(x2 + offset)
-    ys = CT*0.025
-    z = p*1e-4
+    xs = np.sqrt(sfac * SA + soffset)
+    ys = CT * 0.025
+    z = p * 1e-4
 
     v = ( v000 + xs*(v010 + xs*(v020 + xs*(v030 + xs*(v040
         + xs*(v050 + v060*xs))))) + ys*(v100 + xs*(v110 + xs*(v120
@@ -618,9 +612,7 @@ def rho(SA,CT,p):
         + xs*(v013 + v023*xs) + ys*(v103 + v113*xs + v203*ys)
         + z*(v004 + v014*xs + v104*ys + z*(v005 + v006*z))))) )
 
-    rho_return = 1/v
-
-    return(rho_return)
+    return 1. / v
 
 
 if __name__ == '__main__':
