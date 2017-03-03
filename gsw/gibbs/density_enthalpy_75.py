@@ -140,7 +140,7 @@ v600 =  3.1932457305e-5
 
 
 @match_args_return
-def alpha(SA,CT,p):
+def alpha(SA, CT, p):
     """
     Thermal expansion coefficient from CT (75-term equation)
 
@@ -237,7 +237,7 @@ def alpha(SA,CT,p):
 
 
 @match_args_return
-def alpha_on_beta(SA,CT,p):
+def alpha_on_beta(SA, CT, p):
 
     """
     Thermal expansion divided by saline contraction (75-term equation)
