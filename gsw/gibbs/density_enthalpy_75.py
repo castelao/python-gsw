@@ -8,7 +8,8 @@ from .constants import sfac, soffset
 from ..utilities import match_args_return
 
 __all__ = ['alpha',
-        'alpha_on_beta']
+        'alpha_on_beta',
+        'beta']
 
 
 a000 = -1.5649734675e-5
