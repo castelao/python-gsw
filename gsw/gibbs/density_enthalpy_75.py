@@ -670,16 +670,11 @@ def specvol(SA,CT,p):
 
     SA = np.maximum(SA, 0)
 
-    #deltaS = 24;
-    sfac = 0.0248826675584615           # sfac = 1/(40*(35.16504/35)).
-    offset = 5.971840214030754e-1              # offset = deltaS*sfac.
+    xs = np.sqrt(sfac * SA + soffset)
+    ys = CT * 0.025
+    z = p * 1e-4
 
-    x2 = sfac*SA
-    xs = np.sqrt(x2 + offset)
-    ys = CT*0.025
-    z = p*1e-4
-
-    specvol_return = ( v000 + xs*(v010 + xs*(v020 + xs*(v030 + xs*(v040
+    specific_volume = ( v000 + xs*(v010 + xs*(v020 + xs*(v030 + xs*(v040
         + xs*(v050 + v060*xs))))) + ys*(v100 + xs*(v110 + xs*(v120
         + xs*(v130 + xs*(v140 + v150*xs)))) + ys*(v200 + xs*(v210
         + xs*(v220 + xs*(v230 + v240*xs))) + ys*(v300 + xs*(v310
@@ -695,7 +690,7 @@ def specvol(SA,CT,p):
         + xs*(v013 + v023*xs) + ys*(v103 + v113*xs + v203*ys)
         + z*(v004 + v014*xs + v104*ys + z*(v005 + v006*z))))) )
 
-    return(specvol_return)
+    return specific_volume
 
 
 if __name__ == '__main__':
