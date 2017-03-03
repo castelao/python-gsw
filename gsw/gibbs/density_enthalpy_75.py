@@ -666,6 +666,9 @@ def specvol(SA,CT,p):
     polynomial expressions for the density and specifc volume of
     seawater using the TEOS-10 standard. Ocean Modelling.
     """
+
+    SA = np.maximum(SA, 0)
+
     #deltaS = 24;
     sfac = 0.0248826675584615           # sfac = 1/(40*(35.16504/35)).
     offset = 5.971840214030754e-1              # offset = deltaS*sfac.
