@@ -462,7 +462,7 @@ def alpha_on_beta(SA, CT, p):
 
 
 @match_args_return
-def beta(SA,CT,p):
+def beta(SA, CT, p):
     """
     Haline contraction coefficient at constant CT (75-term equation)
 
@@ -564,7 +564,7 @@ def beta(SA,CT,p):
 
 
 @match_args_return
-def dynamic_enthalpy(SA,CT,p):
+def dynamic_enthalpy(SA, CT, p):
     """
     Dynamic enthalpy of seawater (76-term equation)
 
