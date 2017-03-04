@@ -653,9 +653,7 @@ def dynamic_enthalpy(SA, CT, p):
         + z*(h004 + xs*(h104 + h204*xs) + ys*(h014 + h114*xs + h024*ys)
         + z*(h005 + h105*xs + h015*ys + z*(h006 + h007*z)))))) )
 
-    dynamic_enthalpy_return = dynamic_enthalpy_part * 1e4 * db2Pascal
-
-    return(dynamic_enthalpy_return)
+    return dynamic_enthalpy_part * 1e4 * db2Pascal
 
 
 @match_args_return
