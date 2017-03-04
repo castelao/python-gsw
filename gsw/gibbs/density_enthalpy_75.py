@@ -621,7 +621,6 @@ def dynamic_enthalpy(SA, CT, p):
        using the TEOS-10 standard. Ocean Modelling.
     """
 
-    # This line ensures that SA is non-negative.
     SA = np.maximum(SA, 0)
 
     # Set lower temperature limit for water that is much colder than the
@@ -635,8 +634,8 @@ def dynamic_enthalpy(SA, CT, p):
     cp0 = 3991.86795711963     # from Eqn. (3.3.3) of IOC et al. (2010).
 
     xs = np.sqrt(sfac * SA + soffset)
-    ys = CT*0.025
-    z = p*1e-4
+    ys = CT * 0.025
+    z = p * 1e-4
 
     dynamic_enthalpy_part = ( z*(h001 + xs*(h101 + xs*(h201 + xs*(h301
         + xs*(h401 + xs*(h501 + h601*xs))))) + ys*(h011 + xs*(h111
