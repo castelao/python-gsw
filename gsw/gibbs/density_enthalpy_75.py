@@ -4,7 +4,7 @@ from __future__ import division
 
 import numpy as np
 
-from .constants import sfac, soffset
+from .constants import sfac, soffset, db2Pascal
 from ..utilities import match_args_return
 
 __all__ = ['alpha',
@@ -632,7 +632,6 @@ def dynamic_enthalpy(SA, CT, p):
     if Icold.any():
         CT[Icold] = np.nan
 
-    db2Pa = 1e4                      # factor to convert from dbar to Pa
     cp0 = 3991.86795711963     # from Eqn. (3.3.3) of IOC et al. (2010).
 
     sfac = 0.0248826675584615             # sfac = 1/(40*(35.16504/35)).
@@ -659,8 +658,7 @@ def dynamic_enthalpy(SA, CT, p):
         + z*(h004 + xs*(h104 + h204*xs) + ys*(h014 + h114*xs + h024*ys)
         + z*(h005 + h105*xs + h015*ys + z*(h006 + h007*z)))))) )
 
-    dynamic_enthalpy_return = dynamic_enthalpy_part*1e8
-    # Note. 1e8 = db2Pa*1e4
+    dynamic_enthalpy_return = dynamic_enthalpy_part * 1e4 * db2Pascal
 
     return(dynamic_enthalpy_return)
 
