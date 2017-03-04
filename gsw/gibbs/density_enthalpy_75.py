@@ -667,58 +667,63 @@ def dynamic_enthalpy(SA,CT,p):
 
 @match_args_return
 def rho(SA, CT, p):
-
     """
-    gsw.rho                           in-situ density (76-term equation)
-    ====================================================================
+    In-situ density from SA, CT & p (75-term equation)
 
-    USAGE:
-    rho = gsw.rho(SA,CT,p)
-
-    DESCRIPTION:
     Calculates in-situ density from Absolute Salinity and Conservative
     Temperature, using the computationally-efficient expression for
-    specific volume in terms of SA, CT and p  (Roquet et al., 2014).
+    specific volume in terms of SA, CT and p  (Roquet et al., 2015).
 
-    Note that potential density with respect to reference pressure, pr,
-    is obtained by calling this function with the pressure argument
-    being pr (i.e. "gsw.rho(SA,CT,pr)").
+    Parameters
+    ----------
+    SA : array_like
+         Absolute Salinity  [g/kg]
+    CT : array_like
+         Conservative Temperature [:math:`^\circ` C (ITS-90)]
+    p : array_like
+        sea pressure ( i.e. absolute pressure - 10.1325 dbar ) [dbar]
 
-    Note that the computationally-efficient expression has been fitted
-    in a restricted range of parameter space, and is most accurate
-    inside the "oceanographic funnel" described in IOC et al. (2010).
-    The GSW library function "gsw.infunnel(SA,CT,p)" is avaialble to be
-    used if one wants to test if some of one's data lies outside this
-    "funnel".
+    Returns
+    -------
+    rho : array_like
+          in-situ density [kg/m**3]
 
-    INPUT:
-    SA  =  Absolute Salinity                                    [ g/kg ]
-    CT  =  Conservative Temperature (ITS-90)                   [ deg C ]
-    p   =  sea pressure                                         [ dbar ]
-           ( i.e. absolute pressure - 10.1325 dbar )
+    Notes
+    -----
+    The potential density with respect to reference pressure, pr, is obtained
+    by calling this function with the pressure argument being pr (i.e.
+    "rho(SA,CT,pr)").
+
+    Note that this 75-term equation has been fitted in a restricted range of
+    parameter space, and is most accurate inside the "oceanographic funnel"
+    described in McDougall et al. (2003).  The GSW library function
+    infunnel(SA,CT,p) is avaialble to be used if one wants to test if some of
+    one's data lies outside this "funnel".
 
     SA & CT need to have the same dimensions.
     p may have dimensions 1x1 or Mx1 or 1xN or MxN, where SA & CT are
     MxN.
 
-    OUTPUT:
-    rho  =  in-situ density                                     [ kg/m ]
+    Version
+    -------
+    3.05 (27th November, 2015)
 
-    AUTHOR:
-    Paul Barker and Trevor McDougall                [ help@teos-10.org ]
+    References
+    ----------
+    .. [1] IOC, SCOR and IAPSO, 2010: The international thermodynamic equation
+       of seawater - 2010: Calculation and use of thermodynamic properties.
+       Intergovernmental Oceanographic Commission, Manuals and Guides No. 56,
+       UNESCO (English), 196 pp. Available from http://www.TEOS-10.org
+       See Eqn. (2.18.3) of this TEOS-10 manual.
 
-    VERSION NUMBER: 3.05 (27th November, 2015)
+    .. [2] McDougall, T.J., D.R. Jackett, D.G. Wright and R. Feistel, 2003:
+       Accurate and computationally efficient algorithms for potential
+       temperature and density of seawater.  J. Atmosph. Ocean. Tech., 20,
+       pp. 730-741.
 
-    REFERENCES:
-    IOC, SCOR and IAPSO, 2010: The international thermodynamic equation
-    of seawater - 2010: Calculation and use of thermodynamic properties.
-    Intergovernmental Oceanographic Commission, Manuals and Guides No.
-    56,UNESCO (English), 196 pp.  Available from http://www.TEOS-10.org
-    See appendix A.20 and appendix K of this TEOS-10 Manual.
-
-    Roquet, F., G. Madec, T.J. McDougall, P.M. Barker, 2014: Accurate
-    polynomial expressions for the density and specifc volume of
-    seawater using the TEOS-10 standard. Ocean Modelling.
+    .. [3] Roquet, F., G. Madec, T.J. McDougall, P.M. Barker, 2015: Accurate
+       polynomial expressions for the density and specifc volume of seawater
+       using the TEOS-10 standard. Ocean Modelling.
     """
 
     return 1. / specvol(SA, CT, p)
