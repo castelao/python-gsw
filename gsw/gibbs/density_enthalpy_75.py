@@ -328,7 +328,6 @@ def alpha(SA, CT, p):
        using the TEOS-10 standard. Ocean Modelling.
     """
 
-    # This line ensures that SA is non-negative.
     SA = np.maximum(SA, 0)
 
     xs = np.sqrt(sfac * SA + soffset)
@@ -621,6 +620,7 @@ def dynamic_enthalpy(SA, CT, p):
        polynomial expressions for the density and specifc volume of seawater
        using the TEOS-10 standard. Ocean Modelling.
     """
+
     # This line ensures that SA is non-negative.
     SA = np.maximum(SA, 0)
 
