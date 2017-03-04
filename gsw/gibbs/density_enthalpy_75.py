@@ -565,64 +565,61 @@ def beta(SA,CT,p):
 
 @match_args_return
 def dynamic_enthalpy(SA,CT,p):
-
     """
-    gsw.dynamic_enthalpy                    dynamic enthalpy of seawater
-                                                      (76-term equation)
-    ====================================================================
+    Dynamic enthalpy of seawater (76-term equation)
 
-    USAGE:
-    dynamic_enthalpy = gsw.dynamic_enthalpy(SA,CT,p)
-
-    DESCRIPTION:
     Calculates dynamic enthalpy of seawater using the computationally-
     efficient expression for specific volume in terms of SA, CT and p
-    (Roquet et al., 2014).  Dynamic enthalpy is defined as enthalpy
+    (Roquet et al., 2015).  Dynamic enthalpy is defined as enthalpy
     minus potential enthalpy (Young, 2010).
 
-    Note that the 76-term equation has been fitted in a restricted range
-    of parameter space, and is most accurate inside the "oceanographic
-    funnel" described in IOC et al. (2010).  The GSW library function
-    "gsw.infunnel(SA,CT,p)" is avaialble to be used if one wants to test
-    if some of one's data lies outside this "funnel".
 
-    INPUT:
-    SA  =  Absolute Salinity                                    [ g/kg ]
-    CT  =  Conservative Temperature (ITS-90)                   [ deg C ]
-    p   =  sea pressure                                         [ dbar ]
-           ( i.e. absolute pressure - 10.1325 dbar )
+    Parameters
+    ----------
+    SA : array_like
+         Absolute Salinity  [g/kg]
+    CT : array_like
+         Conservative Temperature [:math:`^\circ` C (ITS-90)]
+    p : array_like
+        sea pressure ( i.e. absolute pressure - 10.1325 dbar ) [dbar]
+
+    Returns
+    -------
+    dynamic_enthalpy : array_like
+                       dynamic enthalpy [ J/kg ]
+
+    Notes
+    -----
+    Note that this 75-term equation has been fitted in a restricted range of
+    parameter space, and is most accurate inside the "oceanographic funnel"
+    described in McDougall et al. (2003).  The GSW library function
+    infunnel(SA,CT,p) is avaialble to be used if one wants to test if some of
+    one's data lies outside this "funnel".
 
     SA & CT need to have the same dimensions.
     p may have dimensions 1x1 or Mx1 or 1xN or MxN, where SA & CT are
     MxN.
 
-    OUTPUT:
-    dynamic_enthalpy  =  dynamic enthalpy                       [ J/kg ]
+    Version
+    -------
+    3.05 (27th November, 2015)
 
-    AUTHOR:
-    Trevor McDougall and Paul Barker                [ help@teos-10.org ]
+    References
+    ----------
+    .. [1] IOC, SCOR and IAPSO, 2010: The international thermodynamic equation
+       of seawater - 2010: Calculation and use of thermodynamic properties.
+       Intergovernmental Oceanographic Commission, Manuals and Guides No. 56,
+       UNESCO (English), 196 pp. Available from http://www.TEOS-10.org
+       See Eqn. (2.18.3) of this TEOS-10 manual.
 
-    VERSION NUMBER: 3.04 (10th December, 2013)
+    .. [2] McDougall, T.J., D.R. Jackett, D.G. Wright and R. Feistel, 2003:
+       Accurate and computationally efficient algorithms for potential
+       temperature and density of seawater.  J. Atmosph. Ocean. Tech., 20,
+       pp. 730-741.
 
-    REFERENCES:
-    IOC, SCOR and IAPSO, 2010: The international thermodynamic equation
-    of seawater - 2010: Calculation and use of thermodynamic properties.
-    Intergovernmental Oceanographic Commission, Manuals and Guides No.
-    56, UNESCO (English), 196 pp.  Available from http://www.TEOS-10.org
-    See section 3.2 of this TEOS-10 Manual.
-
-    McDougall, T. J., 2003: Potential enthalpy: A conservative oceanic
-    variable for evaluating heat content and heat fluxes. Journal of
-    Physical Oceanography, 33, 945-963.
-    See Eqns. (18) and (22)
-
-    Roquet, F., G. Madec, T.J. McDougall, P.M. Barker, 2014: Accurate
-    polynomial expressions for the density and specifc volume of seawater
-    using the TEOS-10 standard. Ocean Modelling.
-
-    Young, W.R., 2010: Dynamic enthalpy, Conservative Temperature, and
-    the seawater Boussinesq approximation. Journal of Physical
-    Oceanography, 40, 394-400.
+    .. [3] Roquet, F., G. Madec, T.J. McDougall, P.M. Barker, 2015: Accurate
+       polynomial expressions for the density and specifc volume of seawater
+       using the TEOS-10 standard. Ocean Modelling.
     """
     # This line ensures that SA is non-negative.
     SA = np.maximum(SA, 0)
