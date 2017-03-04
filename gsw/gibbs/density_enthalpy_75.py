@@ -634,11 +634,7 @@ def dynamic_enthalpy(SA, CT, p):
 
     cp0 = 3991.86795711963     # from Eqn. (3.3.3) of IOC et al. (2010).
 
-    sfac = 0.0248826675584615             # sfac = 1/(40*(35.16504/35)).
-    offset = 5.971840214030754e-1
-
-    x2 = sfac*SA
-    xs = np.sqrt(x2 + offset)
+    xs = np.sqrt(sfac * SA + soffset)
     ys = CT*0.025
     z = p*1e-4
 
