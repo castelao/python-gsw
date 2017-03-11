@@ -7,7 +7,8 @@ import numpy as np
 from .constants import sfac, soffset
 from ..utilities import match_args_return
 
-__all__ = ['specvol']
+__all__ = ['rho',
+           'specvol']
 
 
 v000 =  1.0769995862e-3
@@ -85,6 +86,112 @@ v500 = -2.1092370507e-4
 v501 =  3.0927427253e-6
 v510 =  1.3864594581e-6
 v600 =  3.1932457305e-5
+
+
+@match_args_return
+def rho(SA, CT, p):
+    """
+    In-situ density from SA, CT & p (75-term equation)
+
+    Calculates in-situ density from Absolute Salinity and Conservative
+    Temperature, using the computationally-efficient expression for
+    specific volume in terms of SA, CT and p  (Roquet et al., 2015).
+
+    Parameters
+    ----------
+    SA : array_like
+         Absolute Salinity  [g/kg]
+    CT : array_like
+         Conservative Temperature [:math:`^\circ` C (ITS-90)]
+    p : array_like
+        sea pressure ( i.e. absolute pressure - 10.1325 dbar ) [dbar]
+
+    Returns
+    -------
+    rho : array_like
+          in-situ density [kg/m**3]
+
+    Examples
+    --------
+    >>> import gsw
+    >>> SA = [34.7118, 34.8915, 35.0256, 34.8472, 34.7366, 34.7324]
+    >>> CT = [28.8099, 28.4392, 22.7861, 10.2261, 6.8272, 4.3235]
+    >>> p = [10, 50, 125, 250, 600, 1000]
+    >>> gsw.rho(SA, CT, p)
+    array([ 1021.83993574,  1022.26245797,  1024.42722421,  1027.79017056,
+            1029.837779  ,  1032.00246658])
+
+    Notes
+    -----
+    The potential density with respect to reference pressure, pr, is obtained
+    by calling this function with the pressure argument being pr (i.e.
+    "rho(SA,CT,pr)").
+
+    Note that this 75-term equation has been fitted in a restricted range of
+    parameter space, and is most accurate inside the "oceanographic funnel"
+    described in McDougall et al. (2003).  The GSW library function
+    "infunnel(SA,CT,p)" is avaialble to be used if one wants to test if some of
+    one's data lies outside this "funnel".
+
+    SA & CT need to have the same dimensions.
+    p may have dimensions 1x1 or Mx1 or 1xN or MxN, where SA & CT are
+    MxN.
+
+    Version
+    -------
+    3.05 (27th November, 2015)
+
+    References
+    ----------
+    .. [1] IOC, SCOR and IAPSO, 2010: The international thermodynamic equation
+       of seawater - 2010: Calculation and use of thermodynamic properties.
+       Intergovernmental Oceanographic Commission, Manuals and Guides No. 56,
+       UNESCO (English), 196 pp. Available from http://www.TEOS-10.org
+       See Eqn. (2.18.3) of this TEOS-10 manual.
+
+    .. [2] McDougall, T.J., D.R. Jackett, D.G. Wright and R. Feistel, 2003:
+       Accurate and computationally efficient algorithms for potential
+       temperature and density of seawater.  J. Atmosph. Ocean. Tech., 20,
+       pp. 730-741.
+
+    .. [3] Roquet, F., G. Madec, T.J. McDougall, P.M. Barker, 2015: Accurate
+       polynomial expressions for the density and specifc volume of seawater
+       using the TEOS-10 standard. Ocean Modelling.
+    """
+
+    SA = np.maximum(SA, 0)
+
+    xs = np.sqrt(sfac * SA + soffset)
+    ys = CT * 0.025
+    z = p * 1e-4
+
+    specific_volume = (v000
+        + xs * (v100 + xs * (v200 + xs * (v300 + xs * (v400 + xs * (v500
+            + xs * v600)))))
+        + ys * (v010
+            + xs * (v110 + xs * (v210 + xs * (v310 + xs * (v410 + xs * v510))))
+            + ys * (v020 + xs * (v120 + xs * (v220 + xs * (v320 + xs * v420)))
+                + ys * (v030 + xs * (v130 + xs * (v230 + xs * v330))
+                    + ys * (v040 + xs * (v140 + xs * v240)
+                        + ys * (v050 + xs * v150 + ys * v060)))))
+        + z * (v001
+            + xs * (v101 + xs * (v201 + xs * (v301 + xs * (v401 + xs * v501))))
+            + ys * (v011 + xs * (v111 + xs * (v211 + xs * (v311 + xs * v411)))
+                + ys * (v021 + xs * (v121 + xs * (v221 + xs * v321))
+                    + ys * (v031 + xs * (v131 + xs * v231)
+                        + ys * (v041 + xs * v141 + ys * v051))))
+            + z * (v002
+                + xs * (v102 + xs * (v202 + xs * (v302 + xs * v402)))
+                + ys * (v012 + xs * (v112 + xs * (v212 + xs * v312))
+                    + ys * (v022 + xs * (v122 + xs * v222)
+                        + ys * (v032 + xs * v132 + ys * v042)))
+                + z * (v003
+                    + xs * (v103 + xs * v203)
+                    + ys * (v013 + xs * v113 + ys * v023)
+                    + z * (v004 + xs * v104 + ys * v014
+                        + z * (v005 + z * v006))))))
+
+    return 1. / specific_volume
 
 
 @match_args_return
