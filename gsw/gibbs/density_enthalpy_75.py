@@ -182,10 +182,6 @@ def alpha(SA, CT, p):
     "infunnel(SA,CT,p)" is avaialble to be used if one wants to test if some of
     one's data lies outside this "funnel".
 
-    SA & CT need to have the same dimensions.
-    p may have dimensions 1x1 or Mx1 or 1xN or MxN, where SA & CT are
-    MxN.
-
     Version
     -------
     3.05 (27th November, 2015)
@@ -303,10 +299,6 @@ def rho(SA, CT, p):
     "infunnel(SA,CT,p)" is avaialble to be used if one wants to test if some of
     one's data lies outside this "funnel".
 
-    SA & CT need to have the same dimensions.
-    p may have dimensions 1x1 or Mx1 or 1xN or MxN, where SA & CT are
-    MxN.
-
     Version
     -------
     3.05 (27th November, 2015)
@@ -404,10 +396,6 @@ def specvol(SA, CT, p):
     described in McDougall et al. (2003).  The GSW library function
     "infunnel(SA,CT,p)" is avaialble to be used if one wants to test if some of
     one's data lies outside this "funnel".
-
-    SA & CT need to have the same dimensions.
-    p may have dimensions 1x1 or Mx1 or 1xN or MxN, where SA & CT are
-    MxN.
 
     Version
     -------
