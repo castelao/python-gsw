@@ -133,8 +133,8 @@ function_arguments = dict(
     # CT_maxdensity TODO
     #
     # density_enthalpy_48.py NOTE: None are tested on Matlab.
-    rho=('SA', 'CT', 'p'),
-    alpha=('SA', 'CT', 'p'),
+    #rho=('SA', 'CT', 'p'),
+    #alpha=('SA', 'CT', 'p'),
     beta=('SA', 'CT', 'p'),
     rho_alpha_beta=('SA', 'CT', 'p'),
     #specvol=('SA', 'CT', 'p'),
