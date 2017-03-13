@@ -184,10 +184,6 @@ def alpha(SA, CT, p):
 
     SA & CT need to have the same dimensions.
 
-    Version
-    -------
-    3.05 (27th November, 2015)
-
     References
     ----------
     .. [1] IOC, SCOR and IAPSO, 2010: The international thermodynamic equation
@@ -303,10 +299,6 @@ def rho(SA, CT, p):
 
     SA & CT need to have the same dimensions.
 
-    Version
-    -------
-    3.05 (27th November, 2015)
-
     References
     ----------
     .. [1] IOC, SCOR and IAPSO, 2010: The international thermodynamic equation
@@ -402,10 +394,6 @@ def specvol(SA, CT, p):
     one's data lies outside this "funnel".
 
     SA & CT need to have the same dimensions.
-
-    Version
-    -------
-    3.05 (27th November, 2015)
 
     References
     ----------
