@@ -182,9 +182,7 @@ def alpha(SA, CT, p):
     "infunnel(SA,CT,p)" is avaialble to be used if one wants to test if some of
     one's data lies outside this "funnel".
 
-    Version
-    -------
-    3.05 (27th November, 2015)
+    SA & CT need to have the same dimensions.
 
     References
     ----------
@@ -299,9 +297,7 @@ def rho(SA, CT, p):
     "infunnel(SA,CT,p)" is avaialble to be used if one wants to test if some of
     one's data lies outside this "funnel".
 
-    Version
-    -------
-    3.05 (27th November, 2015)
+    SA & CT need to have the same dimensions.
 
     References
     ----------
@@ -397,9 +393,7 @@ def specvol(SA, CT, p):
     "infunnel(SA,CT,p)" is avaialble to be used if one wants to test if some of
     one's data lies outside this "funnel".
 
-    Version
-    -------
-    3.05 (27th November, 2015)
+    SA & CT need to have the same dimensions.
 
     References
     ----------
