@@ -699,7 +699,7 @@ def enthalpy_SSO_0_CT25(p):
 
 def enthalpy_SSO_0(p):
     """
-    Enthalpy at SSO and CT(T=0) C (75-term equation)
+    Enthalpy at SSO and CT(T=0) (75-term equation)
 
     This function calculates enthalpy at the Standard Ocean Salinty, SSO,
     and at a Conservative Temperature of zero degrees C, as a function of
@@ -725,10 +725,6 @@ def enthalpy_SSO_0(p):
     >>> gsw.library.enthalpy_SSO_0(p)
     array([   97.26388583,   486.27439853,  1215.47517122,  2430.24907325,
             5827.90879421,  9704.32030926])
-
-    Version
-    -------
-    3.05 (27th November, 2015)
 
     References
     ----------
